@@ -1,0 +1,128 @@
+.experience__container {
+  margin-top: 3.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4%;
+}
+.skills {
+  border-radius: 1.7rem;
+  text-align: center;
+  padding: 1.6rem;
+  transition: var(--transition);
+  width: 48%;
+  margin: 1rem 0;
+}
+.skills:hover {
+  cursor: default;
+}
+.skills-rates {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100% - 4rem);
+  justify-content: space-evenly;
+}
+.skills-rates .progress {
+  width: 100%;
+  background-color: #eeeeee;
+  height: 1.5rem;
+  margin: 2rem 0;
+  position: relative;
+  border-radius: 1rem;
+  transform-style: preserve-3d;
+  perspective-origin: 5000px;
+}
+.skills-rates .progress span:first-of-type {
+  position: absolute;
+  left: 0;
+  border-radius: 1rem;
+  bottom: 0;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    var(--color-primary-variant) 0%,
+    var(--color-bg-variant) 100%
+  );
+  transition: 1s;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+}
+.skills-rates .progress label {
+  position: absolute;
+  left: 0;
+  top: -150%;
+  color: var(--color-white);
+  font-weight: bold;
+}
+.progress__icon__wrapper {
+  position: absolute;
+  left: 50%;
+  top: -3.5rem;
+  transform: translateX(-50%);
+}
+.progress__icon {
+  font-size: 3rem;
+  animation: rotateAnimation 2s linear infinite;
+}
+.progress__icon-react {
+  font-size: 3rem;
+  animation: spin2d 5000ms infinite linear;
+}
+
+.skills-rates .progress .counter {
+  position: absolute;
+  width: fit-content;
+  font-size: 0.8rem;
+  top: -150%;
+  right: 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0.1rem;
+  color: var(--color-white);
+}
+.spin2d {
+  animation: spin2d 5000ms infinite linear;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+  bottom: 10 !important;
+}
+.experience__container .swiper-pagination-bullet {
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 28px;
+}
+.experience__container .swiper-pagination-bullet-active {
+  background-color: var(--color-bg-variant) !important;
+}
+/*========= MEDIA QUERIES (MEDIUM) =========*/
+@media screen and (max-width: 1024px) {
+  /* .skills {
+    width: 100%;
+  } */
+}
+/*========= MEDIA QUERIES (SMALL) =========*/
+@media screen and (max-width: 600px) {
+}
+/*========= Key frame =========*/
+@keyframes spin2d {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateAnimation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
