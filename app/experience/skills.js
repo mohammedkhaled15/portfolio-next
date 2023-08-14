@@ -14,6 +14,7 @@ import { SiReactrouter } from "react-icons/si";
 import { IoLogoNodejs } from "react-icons/io";
 import { SiMongodb } from "react-icons/si";
 import { SiExpress } from "react-icons/si";
+import {SiNextdotjs} from "react-icons/si"
 
 const skills = [
   {
@@ -47,6 +48,12 @@ const skills = [
         name: "ReactJs",
         icon: (color)=><GrReactjs color={color} className='progress__icon'/>,
         color: "#5CD0EE",
+        percentage: "80%",
+      },
+      {
+        name: "NextJs",
+        icon: (color)=><SiNextdotjs color={color} className='progress__icon'/>,
+        color: "black",
         percentage: "80%",
       },
     ],
