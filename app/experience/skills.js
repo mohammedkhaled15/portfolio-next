@@ -22,37 +22,37 @@ const skills = [
     subSkills: [
       {
         name: "HTML5",
-        icon: (color)=><SiCss3 color={color} className='progress__icon'/>,
+        icon: SiCss3,
         color: "red",
         percentage: "90%",
       },
       {
         name: "CSS3",
-        icon: (color)=><SiCss3 color={color} className='progress__icon'/>,
+        icon: SiCss3,
         color: "#264de4",
         percentage: "85%",
       },
       {
         name: "javaScript",
-        icon: (color)=><SiJavascript color={color} className='progress__icon'/>,
+        icon: SiJavascript,
         color: "#f0db4f",
         percentage: "80%",
       },
       {
         name: "TypeScript",
-        icon: (color)=><SiTypescript color={color} className='progress__icon'/>,
+        icon: SiTypescript,
         color: "#377ab1",
         percentage: "85%",
       },
       {
         name: "ReactJs",
-        icon: (color)=><GrReactjs color={color} className='progress__icon'/>,
+        icon: GrReactjs,
         color: "#5CD0EE",
         percentage: "80%",
       },
       {
         name: "NextJs",
-        icon: (color)=><SiNextdotjs color={color} className='progress__icon'/>,
+        icon: SiNextdotjs,
         color: "black",
         percentage: "80%",
       },
@@ -63,19 +63,19 @@ const skills = [
     subSkills: [
       {
         name: "NodeJs",
-        icon: (color)=><IoLogoNodejs color={color} className="progress__icon"/>,
+        icon: IoLogoNodejs,
         color: "#228137",
         percentage: "80%",
       },
       {
         name: "MongoDb",
-        icon: (color)=><SiMongodb color={color} className="progress__icon"/>,
+        icon: SiMongodb,
         color: "#00684A",
         percentage: "80%",
       },
       {
         name: "ExpressJs",
-        icon: (color)=><SiExpress color={color} className="progress__icon"/>,
+        icon: SiExpress,
         color: "black",
         percentage: "85%",
       },
@@ -84,67 +84,67 @@ const skills = [
   // {
   //   title: "React Libraries",
   //   subSkills: [
-  //     // {
-  //     //   name: "Sass",
-  //     //   icon: (color)=><FaSass color={color} className="progress__icon"/>,
-  //     //   color: "#C66394",
-  //     //   percentage: "85%",
-  //     // },
-  //     // {
-  //     //   name: "Bootstrap",
-  //     //   icon: (color)=><FaBootstrap color={color} className="progress__icon"/>,
-  //     //   color: "#14B6AE",
-  //     //   percentage: "90%",
-  //     // },
-  //     // {
-  //     //   name: "Tailwind",
-  //     //   icon: (color)=><SiTailwindcss color={color} className="progress__icon"/>,
-  //     //   color: "#36B7F0",
-  //     //   percentage: "85%",
-  //     // },
-  //     // {
-  //     //   name: "Material UI",
-  //     //   icon: (color)=><SiMaterialui color={color} className="progress__icon"/>,
-  //     //   color: "#007BF7",
-  //     //   percentage: "80%",
-  //     // },
-  //   ],
-  // },
-  // {
-  //   title: "Libraries",
-  //   subSkills: [
   //     {
-  //       name: "React Hooks",
-  //       icon: (color)=><RiReactjsLine color={color} className="progress__icon"/>,
-  //       color: "#5CD0EE",
+  //       name: "Sass",
+  //       icon: FaSass,
+  //       color: "#C66394",
   //       percentage: "85%",
   //     },
   //     {
-  //       name: "Redux-toolkit",
-  //       icon: (color)=><SiRedux color={color} className="progress__icon"/>,
-  //       color: "#7046B2",
+  //       name: "Bootstrap",
+  //       icon: FaBootstrap,
+  //       color: "#14B6AE",
+  //       percentage: "90%",
+  //     },
+  //     {
+  //       name: "Tailwind",
+  //       icon: SiTailwindcss,
+  //       color: "#36B7F0",
   //       percentage: "85%",
   //     },
   //     {
-  //       name: "Router",
-  //       icon: (color)=><SiReactrouter color={color} className="progress__icon"/>,
-  //       color: "#C5021A",
+  //       name: "Material UI",
+  //       icon: SiMaterialui,
+  //       color: "#007BF7",
   //       percentage: "80%",
   //     },
   //   ],
   // },
   {
+    title: "Libraries",
+    subSkills: [
+      {
+        name: "React Hooks",
+        icon: RiReactjsLine,
+        color: "#5CD0EE",
+        percentage: "85%",
+      },
+      {
+        name: "Redux-toolkit",
+        icon: SiRedux,
+        color: "#7046B2",
+        percentage: "85%",
+      },
+      {
+        name: "Router",
+        icon: SiReactrouter,
+        color: "#C5021A",
+        percentage: "80%",
+      },
+    ],
+  },
+  {
     title: "Side Skills",
     subSkills: [
       {
         name: "Problem Solving",
-        icon: (color)=><BsDiagram3Fill color={color} className="progress__icon"/>,
+        icon: BsDiagram3Fill,
         color: "#black",
         percentage: "60%",
       },
       {
         name: "Git",
-        icon: (color)=><FaGitAlt color={color} className="progress__icon"/>,
+        icon: FaGitAlt,
         color: "#E94E31",
         percentage: "90%",
       },

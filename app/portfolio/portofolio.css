@@ -1,0 +1,93 @@
+.portofolio__container {
+  margin-top: 3.5rem;
+}
+.portofolio__container .filter-container {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.portofolio__container .filter-container button {
+  box-shadow: 3.1px 6.2px 6.2px hsl(0deg 0% 0% / 0.4);
+  transition: var(--transition);
+}
+.portofolio__container .filter-container button.active {
+  background-color: var(--color-white);
+  box-shadow: 0.6px 1.3px 1.3px hsl(0deg 0% 0% / 0.48);
+  border-color: transparent;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 290px));
+  row-gap: 2rem;
+  column-gap: 2rem;
+  margin-top: 2rem;
+  min-height: 250px;
+  justify-content: center;
+}
+.projects .repo-card {
+  text-align: center;
+  position: relative;
+}
+.projects .repo-card .overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+  visibility: hidden;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+  gap: 1rem;
+  transition: var(--transition);
+  display: flex;
+  padding: 1rem 0;
+}
+.projects .repo-card .overlay .overlay__cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.projects .repo-card:hover .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+.projects .repo-card img {
+  height: 250px !important;
+  object-fit: unset;
+  border-radius: 1rem;
+}
+.projects .repo-card h4 {
+  text-transform: capitalize;
+  font-size: 1.2rem;
+}
+/*========= MEDIA QUERIES (MEDIUM) =========*/
+@media screen and (max-width: 1024px) {
+  .projects .repo-card .overlay {
+    position: unset;
+    visibility: visible;
+    opacity: 1;
+    height: fit-content;
+    /* padding: 1rem; */
+    flex-wrap: wrap-reverse;
+    background-color: transparent;
+  }
+  .projects .repo-card {
+    background-color: var(--color-bg-variant);
+    /* padding: 1rem; */
+    border-radius: 2rem;
+    border: 1px solid transparent;
+    transition: var(--transition);
+    width: 100%;
+  }
+}
+/*========= MEDIA QUERIES (SMALL) =========*/
+@media screen and (max-width: 600px) {
+}

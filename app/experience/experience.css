@@ -10,7 +10,7 @@
   padding: 1.6rem;
   transition: var(--transition);
   width: 48%;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 }
 .skills:hover {
   cursor: default;
@@ -68,7 +68,7 @@
 }
 .progress__icon {
   font-size: 2.5rem;
-  animation: rotateAnimation 2s linear infinite;
+  /* animation: rotateAnimation 2s linear infinite; */
 }
 .progress__icon-react {
   font-size: 3rem;

@@ -10,11 +10,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Tooltip } from 'react-tooltip'
 import { Fragment } from "react"
+import { RiGalleryFill } from "react-icons/ri"
 
 export const links = [
     { path: "/", icon: AiOutlineHome },
     { path: "/about", icon: AiOutlineUser },
     { path: "/experience", icon: MdWorkOutline },
+    { path: "/portfolio", icon: RiGalleryFill },
     { path: "/services", icon: MdMiscellaneousServices },
     { path: "/contact", icon: AiOutlineContacts },
 ]

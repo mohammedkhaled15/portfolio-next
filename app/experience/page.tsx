@@ -32,7 +32,7 @@ const Experience = () => {
   };
 
   return (
-    <section id='experience'>
+    <section id="experience">
       <h5>Skills I have</h5>
       <h2>My Experience</h2>
       <Swiper
@@ -42,38 +42,53 @@ const Experience = () => {
         pagination={pagination}
         slidesPerView={1}
         autoplay={{
-          delay: 50000000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
-        className="container experience__container">
-
-        {skills.map(skillCat => {
-            return (
-              <SwiperSlide key={skillCat.title} className="skills">
-                <h2>{skillCat.title}</h2>
-                <div className='skills-rates'>
-                  {/* {console.log(skillCat.subSkills[0])} */}
-                  {skillCat.subSkills.map(skill => {
-                      return (
-                        <div key={skill.name} className="progress">
-                          <label>{skill.name}</label>
-                          <div className='progress__icon__wrapper'>
-                            {/* {<skill.icon className='progress__icon' color={skill.color} />} */}
-                            {skill.icon(skill.color)}
-                          </div>
-                          <span style={{ width: `${fire ? skill.percentage : "0"}` }}></span>
-                          {<CountUp end={parseInt(skill.percentage)} enableScrollSpy={fire} duration={1.5} suffix="%" scrollSpyOnce={true} className="counter" />}
-                        </div>
-                      )
-                    })
-                  }
-                </div>
-              </SwiperSlide>
-            )
-          })}
+        className="container experience__container"
+      >
+        {skills.map((skillCat) => {
+          return (
+            <SwiperSlide key={skillCat.title} className="skills">
+              <h2>{skillCat.title}</h2>
+              <div className="skills-rates">
+                {/* {console.log(skillCat.subSkills[0])} */}
+                {skillCat.subSkills.map((skill) => {
+                  return (
+                    <div key={skill.name} className="progress">
+                      <label>{skill.name}</label>
+                      <div className="progress__icon__wrapper">
+                        {
+                          <skill.icon
+                            className="progress__icon"
+                            color={skill.color}
+                          />
+                        }
+                        {/* {skill.icon(skill.color)} */}
+                      </div>
+                      <span
+                        style={{ width: `${fire ? skill.percentage : "0"}` }}
+                      ></span>
+                      {
+                        <CountUp
+                          end={parseInt(skill.percentage)}
+                          enableScrollSpy={fire}
+                          duration={1.5}
+                          suffix="%"
+                          scrollSpyOnce={true}
+                          className="counter"
+                        />
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </section>
-  )
+  );
 }
 
 export default Experience
