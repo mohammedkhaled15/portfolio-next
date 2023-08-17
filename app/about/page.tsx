@@ -44,16 +44,16 @@ const About = () => {
 
         <div className="col-span-2 text-justify mb-2">
           <p className="mb-2">
-            I'm very pleased to introduce my CV hoping to be one of your team.
-            I'm a MERN Stack Developer with 2 years of experience developing
+            I&apos;m very pleased to introduce my CV hoping to be one of your team.
+            I&apos;m a MERN Stack Developer with 2 years of experience developing
             modern, responsive, and cross-browser-compatible websites using
             HTML, CSS, JavaScript, React-js, NextJs, NodeJs, ExpressJS, MongoDb
-            and more variant skills. I'm Seeking a challenging career in your
+            and more variant skills. I&apos;m Seeking a challenging career in your
             company as MERN Stack Developer where my abilities and skills can be
             developed, and my knowledge can be applied.
           </p>
           <Link href="/contact" className="btn btn-primary">
-            Let's Talk
+            Let&apos;s Talk
           </Link>
         </div>
       </div>

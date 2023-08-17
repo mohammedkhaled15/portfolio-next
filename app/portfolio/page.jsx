@@ -5,7 +5,7 @@ import "./portofolio.css"
 import Filters from './Filters'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects } from './projects'
-
+import Image from 'next/image'
 
 
 const Portofolio = () => {
@@ -52,7 +52,7 @@ const Portofolio = () => {
                       transition={{ duration: 0.8 }}
                       className="repo-card" key={project.id}
                     >
-                      <img src={project.imgUrl} alt="project main img" />
+                      <Image src={project.imgUrl} alt="project main img" />
                       <div className="overlay">
                         <div className="overlay__cta">
                           <a href={project.demoLink} className="btn btn-primary" target="_blan;">Live Demo</a>
