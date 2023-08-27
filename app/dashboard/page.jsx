@@ -1,10 +1,12 @@
-import { projects } from "../portfolio/projects"
 import Image from "next/image"
 import Link from "next/link"
 import Modal from "@app/components/modal/Modal"
-import "./portofolio.css"
+import "./dashboard.css"
+import { getAllProjects } from "@utils/projectsActions"
+import { addAllProjects } from "@utils/projectsActions"
+import { clearAllProjects } from "@utils/projectsActions"
 
-const Dashboard = () => {
+const Dashboard = async () => {
 
   async function handleClose() {
     "use server"
@@ -15,11 +17,19 @@ const Dashboard = () => {
     console.log("delete confirmed")
   }
 
+  const projects = await getAllProjects()
+
   return (
     <>
       <Modal onClose={handleClose} onOk={handleOk} title="Delete Confirmation">
         <h4>Are you sure you want to delete this project?</h4>
       </Modal>
+      <form action={addAllProjects}>
+        <button>add</button>
+      </form>
+      <form action={clearAllProjects}>
+        <button>Clear</button>
+      </form>
       <div className="relative flex flex-col gap-10 mt-4 overflow-x-auto shadow-md sm:rounded-lg">
         <h3 className="self-center">All Projects</h3>
         <Link href="/dashboard/create" type="button" className="cursor-pointer text-white self-end bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex gap-3 items-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
@@ -56,8 +66,8 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              projects.map((project) => (
+            {projects ?
+              projects?.map((project) => (
                 <tr key={project.name} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {project.id}
@@ -66,7 +76,7 @@ const Dashboard = () => {
                     {project.name.toLocaleUpperCase()}
                   </td>
                   <td className="px-6 py-4 flex flex-wrap flex-row gap-1 ">
-                    {project.skills.map(skill => (
+                    {project.skills.map((skill) => (
                       <span key={skill} className="p-2 bg-blue-600 text-white rounded-lg">{skill}</span>
                     ))}
                   </td>
@@ -77,20 +87,19 @@ const Dashboard = () => {
                     <Link href={project.repoLink} className="btn btn-primary" target="_blank">Repo</Link>
                   </td>
                   <td className="px-6 py-4">
-                    <Image src={project.imgUrl} width={25} height={25} style={{ objectFit: "contain" }} alt="Project Image" />
+                    <Image className="ProjectImage" src={project.imgUrl} width={25} height={25} style={{ objectFit: "contain" }} alt="Project Image" />
                   </td>
                   <td className="px-6 py-4 text-right flex gap-2">
                     <Link href={`/dashboard/${project.id}`} className=" btn btn-primary font-medium bg-blue-600 dark:bg-blue-500">Edit</Link>
                     <Link href="/dashboard?showModal=y" className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
                   </td>
                 </tr>
-              ))
+              )) : <h2>No Projects to load</h2>
             }
           </tbody>
         </table>
       </div>
     </>
-
   )
 }
 

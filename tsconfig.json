@@ -23,6 +23,6 @@
       "@*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/contact/page.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/contact/page.tsx", "app/dashboard/[id]/page.tsx", "config/connectDb.js", "app/dashboard/page.jsx"],
   "exclude": ["node_modules"]
 }

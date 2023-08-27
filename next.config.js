@@ -4,8 +4,17 @@ const nextConfig = {
     domains:["raw.githubusercontent.com"]
   },
   experimental:{
-    serverActions:true
-  }
+    serverActions:true,
+    appDir:true,
+    serverComponentsExternalPackages:["mongoose"]
+  },
+    webPack(config){
+      config.experiments = {
+        ...config.experiments, 
+        topLevelAwait:true
+      }
+      return config
+    }
 }
 
 module.exports = nextConfig
