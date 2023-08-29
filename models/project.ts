@@ -1,23 +1,40 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 interface IProject {
-  id: number,
-    name: string,
-    skills: string[],
-    demoLink: string,
-    repoLink: string,
-    imgUrl:string,
+  id: number;
+  name: string;
+  skills: mongoose.Document;
+  demoLink: string;
+  repoLink: string;
+  imgUrl: string;
 }
 
 const projectSchema = new Schema<IProject>({
-    id: {type:Number},
-    name: {type:String,required:[true,"DemoLink is Required"]},
-    skills: {type:[],required:[true,"Enter One Skill at least"]},
-    demoLink: {type:String, required:[true,"DemoLink is Required"]},
-    repoLink: {type:String, required:[true,"RepoLink is Required"]},
-    imgUrl:{type:String, required:[true,"Image Url is Required"]},
-})
+  id: { type: Number, unique: true },
+  name: {
+    type: String,
+    required: [true, "DemoLink is Required"],
+    unique: true,
+  },
+  // skills: { type: [], required: [true, "Enter One Skill at least"] },
+  skills: [{ type: String, ref: "Skill" }],
+  demoLink: {
+    type: String,
+    required: [true, "DemoLink is Required"],
+    unique: true,
+  },
+  repoLink: {
+    type: String,
+    required: [true, "RepoLink is Required"],
+    unique: true,
+  },
+  imgUrl: {
+    type: String,
+    required: [true, "Image Url is Required"],
+    unique: true,
+  },
+});
 
-const Project = models.Project || model<IProject>("Project", projectSchema)
+const Project = models.Project || model<IProject>("Project", projectSchema);
 
-export default Project
+export default Project;
