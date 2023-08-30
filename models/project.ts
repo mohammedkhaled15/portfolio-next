@@ -1,22 +1,12 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-interface IProject {
-  id: number;
-  name: string;
-  skills: mongoose.Document;
-  demoLink: string;
-  repoLink: string;
-  imgUrl: string;
-}
-
-const projectSchema = new Schema<IProject>({
+export const projectSchema = new Schema<IProject>({
   id: { type: Number, unique: true },
   name: {
     type: String,
     required: [true, "DemoLink is Required"],
     unique: true,
   },
-  // skills: { type: [], required: [true, "Enter One Skill at least"] },
   skills: [{ type: String, ref: "Skill" }],
   demoLink: {
     type: String,

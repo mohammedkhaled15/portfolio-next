@@ -47,6 +47,7 @@ export const clearAllProjects = async()=>{
 }
 
 export const updateProject = async(id:string, editedProject:ProjectData|undefined)=>{
+  console.log(editedProject)
   try {
     connectDB()
     await Project.findOneAndUpdate({id},editedProject)

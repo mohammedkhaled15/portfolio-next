@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import connectDB from "../../../config/connectDb";
 import Project from "../../../models/project";
+import connectDB from "../../../config/connectDb";
+import { NextResponse } from "next/server";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -19,10 +19,26 @@ export async function GET(request) {
   } else {
     try {
       connectDB();
-      const project = await Project.findOne({ id });
+      const project = await Project.aggregate([
+        {
+          $lookup: {
+            pipeline: [],
+            from: "skills",
+            localField: "skills",
+            foreignField: "value",
+            as: "skillDetails",
+          },
+        },
+        {
+          $match: {
+            id: Number(id),
+          },
+        },
+      ]);
       return new NextResponse(JSON.stringify(project), { status: 200 });
     } catch (error) {
-      return new NextResponse(JSON.stringify({ error: "Database Error2" }), {
+      console.log(error);
+      return new NextResponse(JSON.stringify(error), {
         status: 500,
       });
     }

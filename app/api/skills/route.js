@@ -30,3 +30,20 @@ export async function POST(request, response) {
     });
   }
 }
+export async function DELETE(request, response) {
+  try {
+    connectDB();
+    await Skill.deleteMany();
+    return new NextResponse(
+      JSON.stringify({ message: "Deleted Successfully" }),
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return new NextResponse(JSON.stringify(error), {
+      status: 500,
+    });
+  }
+}
