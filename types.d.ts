@@ -1,7 +1,8 @@
 type ProjectData = {
   id: number;
   name: string;
-  skills: ISkill[];
+  skill: string[];
+  skillsDetails: ISkill[];
   demoLink: string;
   repoLink: string;
   imgUrl: string;

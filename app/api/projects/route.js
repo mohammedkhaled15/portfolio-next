@@ -26,7 +26,7 @@ export async function GET(request) {
             from: "skills",
             localField: "skills",
             foreignField: "value",
-            as: "skillDetails",
+            as: "skillsDetails",
           },
         },
         {
