@@ -2,9 +2,10 @@ import Image from "next/image"
 import Link from "next/link"
 import Modal from "@app/components/modal/Modal"
 import "./dashboard.css"
-import { getAllProjects } from "@utils/projectsActions"
+import { deleteProject, getAllProjects } from "@utils/projectsActions"
 import { addAllProjects } from "@utils/projectsActions"
 import { clearAllProjects } from "@utils/projectsActions"
+import { useRouter } from "next/navigation"
 
 const Dashboard = async () => {
 
@@ -12,13 +13,12 @@ const Dashboard = async () => {
     "use server"
     console.log("modal closed")
   }
-  async function handleOk() {
+  async function handleOk(e) {
     "use server"
-    console.log("delete confirmed")
+    await deleteProject(e)
   }
 
   const projects = await getAllProjects()
-
   return (
     <>
       <Modal onClose={handleClose} onOk={handleOk} title="Delete Confirmation">
@@ -66,11 +66,11 @@ const Dashboard = async () => {
             </tr>
           </thead>
           <tbody>
-            {projects ?
-              projects?.map((project) => (
+            {projects?.length > 0 ?
+              projects?.map((project, index) => (
                 <tr key={project.name} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {project.id}
+                    {index + 1}
                   </th>
                   <td className="px-6 py-4">
                     {project.name.toLocaleUpperCase()}
@@ -90,8 +90,8 @@ const Dashboard = async () => {
                     <Image className="ProjectImage" src={project.imgUrl} width={25} height={25} style={{ objectFit: "contain" }} alt="Project Image" />
                   </td>
                   <td className="px-6 py-4 text-right flex gap-2">
-                    <Link href={`/dashboard/${project.id}`} className=" btn btn-primary font-medium bg-blue-600 dark:bg-blue-500">Edit</Link>
-                    <Link href="/dashboard?showModal=y" className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
+                    <Link href={`/dashboard/${project._id}`} className=" btn btn-primary font-medium bg-blue-600 dark:bg-blue-500">Edit</Link>
+                    <Link href={`/dashboard?showModal=y&id=${project._id}`} className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
                   </td>
                 </tr>
               )) : <h2>No Projects to load</h2>
