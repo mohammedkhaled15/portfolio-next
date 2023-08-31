@@ -1,16 +1,10 @@
 type ProjectData = {
-  id: number;
   name: string;
   skill: string[];
-  skillsDetails: ISkill[];
+  skillsDetails?: ISkill[];
   demoLink: string;
   repoLink: string;
   imgUrl: string;
-};
-
-type UpdateProjectProps = {
-  id: string;
-  editedProject: ProjectData;
 };
 
 interface ISkill {
@@ -19,9 +13,9 @@ interface ISkill {
   optionIsNew?: Boolean;
 }
 interface IProject {
-  id: number;
   name: string;
   skills: { name: String }[];
+  skillsDetails?: ISkill[];
   demoLink: string;
   repoLink: string;
   imgUrl: string;

@@ -16,9 +16,10 @@ const EditPage = () => {
   const projectId = searchParams.id.toString()
   const [disable, setDisable] = useState(false)
 
-  const fetcher = (...args: any[]) => fetch(...args).then(res => res.json())
+  const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.json())
   const { data: project, error, isLoading } = useSWR(`/api/projects/?id=${projectId}`, fetcher)
   const { data: skills } = useSWR(`/api/skills`, fetcher)
+  console.log(project && project[0].skillsDetails)
 
   const [selectedOptions, setSelectedOptions] = useState<ISkill[]>([])
   const [selectOptions, setSelectOptions] = useState<ISkill[]>([])
@@ -34,12 +35,12 @@ const EditPage = () => {
   const [editedProjectData, setEditedProjectData] = useState<ProjectData | undefined>(project)
 
   useEffect(() => { // Here we set edited project which used as value for all form inputs with project came from db
-    setEditedProjectData(project)
+    project && setEditedProjectData(project[0])
   }, [project])
 
   useEffect(() => { // update selectedOptions with values of skills came already with the project data from db
     if (project && Object.entries(project).length !== 0) {
-      project && setSelectedOptions(project.skills.map((skill: String) => ({ value: skill, label: skill } as Option)))
+      project && setSelectedOptions(project[0]?.skillsDetails)
     }
     console.log(selectedOptions)
   }, [project])
@@ -51,9 +52,7 @@ const EditPage = () => {
         headers: {
           "Content-type": "application/json"
         },
-        body: JSON.stringify({
-          name: actionMeta.option.value
-        })
+        body: JSON.stringify(actionMeta.option)
       })
       setSelectedOptions((prev: ISkill[]) => ([...prev, ...option, actionMeta.option]))
     } else if (actionMeta.action === "remove-value") {
@@ -66,7 +65,7 @@ const EditPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setEditedProjectData({ ...editedProjectData, skills: selectedOptions.map((skill) => ({ name: skill.value })), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
+    setEditedProjectData({ ...editedProjectData, skills: selectedOptions.map(skill => skill.value), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
   }
 
   const handleUpdate = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -81,7 +80,7 @@ const EditPage = () => {
   if (isLoading) return <h1>Loading ...</h1>
   if (project) return (
     <div className="flex flex-col gap-3 items-center">
-      <h3 className="self-center my-10 ">Editing Project: {project.name.toUpperCase().replace("-", " ")}</h3>
+      <h3 className="self-center my-10 ">Editing Project: {project?.name?.toUpperCase().replace("-", " ")}</h3>
       <form className="w-[90%] max-w-[700px] ">
         <div className="relative z-0 w-full mb-6 group">
           <input value={editedProjectData?.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />

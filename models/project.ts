@@ -1,13 +1,13 @@
 import { Schema, model, models } from "mongoose";
 
 export const projectSchema = new Schema<IProject>({
-  id: { type: Number, unique: true },
   name: {
     type: String,
     required: [true, "DemoLink is Required"],
     unique: true,
   },
   skills: [{ type: String, ref: "Skill" }],
+  skillsDetails: { type: [], default: [] },
   demoLink: {
     type: String,
     required: [true, "DemoLink is Required"],
@@ -21,7 +21,7 @@ export const projectSchema = new Schema<IProject>({
   imgUrl: {
     type: String,
     required: [true, "Image Url is Required"],
-    unique: true,
+    // unique: true,
   },
 });
 

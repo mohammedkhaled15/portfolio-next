@@ -1,6 +1,7 @@
 import Project from "../../../models/project";
 import connectDB from "../../../config/connectDb";
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -31,7 +32,7 @@ export async function GET(request) {
         },
         {
           $match: {
-            id: Number(id),
+            _id: new mongoose.Types.ObjectId(id),
           },
         },
       ]);

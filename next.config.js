@@ -1,20 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images:{
-    domains:["raw.githubusercontent.com"]
+  images: {
+    domains: ["raw.githubusercontent.com", "images.pexels.com"],
   },
-  experimental:{
-    serverActions:true,
-    appDir:true,
-    serverComponentsExternalPackages:["mongoose"]
+  experimental: {
+    serverActions: true,
+    appDir: true,
+    serverComponentsExternalPackages: ["mongoose"],
   },
-    webPack(config){
-      config.experiments = {
-        ...config.experiments, 
-        topLevelAwait:true
-      }
-      return config
-    }
-}
+  webPack(config) {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true,
+    };
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

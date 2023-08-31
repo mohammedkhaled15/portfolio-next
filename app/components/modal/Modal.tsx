@@ -1,18 +1,20 @@
 "use client"
 
 import React, { useRef, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface ModalProps {
   title: string,
   onClose: () => void,
-  onOk: () => void,
+  onOk: (id?: string | null) => void,
   children: React.ReactNode
 }
 
 const Modal = ({ title, onClose, onOk, children }: ModalProps) => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const showModal = searchParams.get("showModal")
+  const id: string | null = searchParams.get("id")
   const modalRef = useRef<null | HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -26,11 +28,13 @@ const Modal = ({ title, onClose, onOk, children }: ModalProps) => {
   const closeModal = () => {
     modalRef.current?.close()
     onClose()
+    router.push("/dashboard")
   }
 
   const clickOk = () => {
-    onOk()
+    onOk(id)
     closeModal()
+    router.push("/dashboard")
   }
 
   const modal = showModal === "y"

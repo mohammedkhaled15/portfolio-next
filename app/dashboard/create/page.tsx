@@ -1,57 +1,47 @@
 "use client"
 
-import { useParams, useRouter } from "next/navigation"
+import { createProject } from "@utils/projectsActions"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { ActionMeta } from "react-select"
 import useSWR from "swr"
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
 
 const CreatePage = () => {
   const router = useRouter()
-  const searchParams = useParams()
-  const projectId = searchParams.id.toString()
   const [disable, setDisable] = useState(false)
 
-  const fetcher = (...args: any[]) => fetch(...args).then(res => res.json())
-  const { data: project, error, isLoading } = useSWR(`/api/projects/?id=${projectId}`, fetcher)
+  const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.json())
   const { data: skills } = useSWR(`/api/skills`, fetcher)
 
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([])
-  const [selectOptions, setSelectOptions] = useState<Option[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<ISkill[]>([])
+  const [selectOptions, setSelectOptions] = useState<ISkill[]>([])
 
-  useEffect(() => { // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
+  // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
+  useEffect(() => {
     if (selectOptions.length !== skills?.length) {
-      skills?.map((skill: { name: String }) => {
-        setSelectOptions((prev: Option[]) => [...prev, { value: skill.name, label: skill.name }])
+      skills?.map((skill: ISkill) => {
+        setSelectOptions((prev: ISkill[]) => [...prev, { value: skill.value, label: skill.label }])
       })
     }
   }, [skills, selectOptions])
 
-  const [editedProjectData, setEditedProjectData] = useState<ProjectData | undefined>(project)
+  const [createdProject, setCreatedProject] = useState<ProjectData | undefined>()
 
-  useEffect(() => { // Here we set edited project which used as value for all form inputs with project came from db
-    setEditedProjectData(project)
-  }, [project])
-
-  useEffect(() => { // update selectedOptions with values of skills came already with the project data from db
-    if (project && Object.entries(project).length !== 0) {
-      project && setSelectedOptions(project.skills.map((skill: String) => ({ value: skill, label: skill } as Option)))
-    }
-    console.log(selectedOptions)
-  }, [project])
-
-  const handleSelectChange = async (option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+  const handleSelectChange = async (option: readonly ISkill[], actionMeta: ActionMeta<ISkill>) => {
     if (actionMeta.action === "create-option") { // when action is create we will create new skill and update selected options
       const res = await fetch("/api/skills", {
         method: "POST",
         headers: {
           "Content-type": "application/json"
         },
-        body: JSON.stringify({
-          name: actionMeta.option.value
-        })
+        body: JSON.stringify(actionMeta.option)
       })
-      setSelectedOptions(prev => ([...prev, ...option, actionMeta.option]))
+      setSelectedOptions(prev => ([...prev, actionMeta.option]))
     } else if (actionMeta.action === "remove-value") {
-      setSelectedOptions(prev => prev.filter(skill => skill.value !== actionMeta.removedValue.value)); // update selected options without updating db
+      // update selected options without updating db
+      setSelectedOptions(prev => prev.filter(skill => skill.value !== actionMeta.removedValue.value));
     } else {
       setSelectedOptions(prev => [...prev, ...option]); // update selected options without updating db
     }
@@ -60,25 +50,25 @@ const CreatePage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setEditedProjectData({ ...editedProjectData, skills: selectedOptions.map((skill) => ({ name: skill.value })), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
+    setCreatedProject({ ...createdProject, skills: selectedOptions.map(skill => skill.value), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
   }
 
-  const handleUpdate = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleCreate = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(editedProjectData)
+    console.log(createdProject)
     setDisable(true)
-    updateProject(projectId, editedProjectData)
+    createProject(createdProject)
     router.push("/dashboard")
   }
 
-  if (error) return <h1>Failed to Load!</h1>
-  if (isLoading) return <h1>Loading ...</h1>
-  if (project) return (
+  const animatedComponents = makeAnimated();// for animation of selected labels in select input "from docs"
+
+  return (
     <div className="flex flex-col gap-3 items-center">
-      <h3 className="self-center my-10 ">Editing Project: {project.name.toUpperCase().replace("-", " ")}</h3>
+      <h3 className="self-center my-10 ">Crreating New Project</h3>
       <form className="w-[90%] max-w-[700px] ">
         <div className="relative z-0 w-full mb-6 group">
-          <input value={editedProjectData?.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
+          <input value={createdProject?.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
           <label htmlFor="name" className="editProject-label">Project Name</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
@@ -87,13 +77,13 @@ const CreatePage = () => {
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base, state) => ({ ...base, width: "70%", border: "none" }),
-              control: (base, state) => ({ ...base, height: "25px", backgroundColor: "transparent", color: "white" }),
-              input: (base, state) => ({ ...base, color: "white" }),
-              menu: (base, state) => ({ ...base, borderRadius: "10px" }),
-              menuList: (base, state) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
+              container: (base) => ({ ...base, width: "70%", border: "none" }),
+              control: (base) => ({ ...base, height: "25px", backgroundColor: "transparent", color: "white" }),
+              input: (base) => ({ ...base, color: "white" }),
+              menu: (base) => ({ ...base, borderRadius: "10px" }),
+              menuList: (base) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
               option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? "#4DB5FF" : "", fontSize: "12px" }),
-              multiValueLabel: (base, state) => ({ ...base, backgroundColor: "#4DB5FF", color: "white", padding: "3px", width: "fit-content" }),
+              multiValueLabel: (base) => ({ ...base, backgroundColor: "#4DB5FF", color: "white", padding: "3px", width: "fit-content" }),
             }}
             options={selectOptions}
             components={animatedComponents}
@@ -106,18 +96,18 @@ const CreatePage = () => {
           <label htmlFor="skills" className="editProject-label">Select Skills</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={editedProjectData?.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
+          <input value={createdProject?.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="demoLink" className="editProject-label">Demo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={editedProjectData?.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
+          <input value={createdProject?.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="repoLink" className="editProject-label">Repo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={editedProjectData?.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
+          <input value={createdProject?.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
           <label htmlFor="imgUrl" className="editProject-label">Image Url</label>
         </div>
-        <button disabled={disable} type="submit" onClick={(e) => handleUpdate(e)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-slate-400 disabled:text-slate-700 disabled:hover:bg-slate-400 disabled:hover:text-slate-700">Update</button>
+        <button disabled={disable} type="submit" onClick={(e) => handleCreate(e)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-slate-400 disabled:text-slate-700 disabled:hover:bg-slate-400 disabled:hover:text-slate-700">Create</button>
       </form>
     </div >
   )
