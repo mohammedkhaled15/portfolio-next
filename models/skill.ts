@@ -6,6 +6,8 @@ const skillSchema = new Schema<ISkill>({
   optionIsNew: { type: Boolean, default: false },
 });
 
+skillSchema.index({ value: 1, label: 1 }, { unique: true });
+
 const Skill = models.Skill || model<ISkill>("Skill", skillSchema);
 
 export default Skill;
