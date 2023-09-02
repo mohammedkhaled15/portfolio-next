@@ -20,12 +20,12 @@ const CreatePage = () => {
 
   // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
   useEffect(() => {
-    if (selectOptions.length !== skills?.length) {
-      skills?.map((skill: ISkill) => {
-        setSelectOptions((prev: ISkill[]) => [...prev, { value: skill.value, label: skill.label }])
-      })
-    }
-  }, [skills, selectOptions])
+    // if (selectOptions.length !== skills?.length) {
+    skills?.map((skill: ISkill) => {
+      setSelectOptions((prev: ISkill[]) => [...prev, { value: skill.value, label: skill.label }])
+    })
+    // }
+  }, [skills.length])
 
   const [createdProject, setCreatedProject] = useState<ProjectData | undefined>()
 
