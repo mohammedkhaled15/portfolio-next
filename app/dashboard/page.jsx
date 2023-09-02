@@ -24,13 +24,13 @@ const Dashboard = async () => {
       <Modal onClose={handleClose} onOk={handleOk} title="Delete Confirmation">
         <h4>Are you sure you want to delete this project?</h4>
       </Modal>
-      <form action={addAllProjects}>
+      {/* <form action={addAllProjects}>
         <button>add</button>
       </form>
       <form action={clearAllProjects}>
         <button>Clear</button>
-      </form>
-      <div className="relative flex flex-col gap-10 mt-4 overflow-x-auto shadow-md sm:rounded-lg">
+      </form> */}
+      <div className="relative h-screen flex flex-col gap-10 mt-4 overflow-x-auto shadow-md sm:rounded-lg">
         <h3 className="self-center">All Projects</h3>
         <Link href="/dashboard/create" type="button" className="cursor-pointer text-white self-end bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex gap-3 items-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           Create New Project
@@ -94,7 +94,10 @@ const Dashboard = async () => {
                     <Link href={`/dashboard?showModal=y&id=${project._id}`} className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
                   </td>
                 </tr>
-              )) : <h2>No Projects to load</h2>
+              )) :
+              <tr>
+                <th>No Projects to load</th>
+              </tr>
             }
           </tbody>
         </table>

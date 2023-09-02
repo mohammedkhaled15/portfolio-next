@@ -21,13 +21,14 @@ const CreatePage = () => {
   // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
   useEffect(() => {
     // if (selectOptions.length !== skills?.length) {
-    skills?.map((skill: ISkill) => {
-      setSelectOptions((prev: ISkill[]) => [...prev, { value: skill.value, label: skill.label }])
-    })
-    // }
-  }, [skills.length])
+    // skills?.map((skill: ISkill) => {
 
-  const [createdProject, setCreatedProject] = useState<ProjectData | undefined>()
+    skills && setSelectOptions(skills)
+    // })
+    // }
+  }, [skills?.length])
+
+  const [createdProject, setCreatedProject] = useState<ProjectData>({ name: "", skill: [], skillsDetails: [], demoLink: "", repoLink: "", imgUrl: "" })
 
   const handleSelectChange = async (option: readonly ISkill[], actionMeta: ActionMeta<ISkill>) => {
     if (actionMeta.action === "create-option") { // when action is create we will create new skill and update selected options
@@ -45,7 +46,6 @@ const CreatePage = () => {
     } else {
       setSelectedOptions(prev => [...prev, ...option]); // update selected options without updating db
     }
-    console.log(actionMeta)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,7 @@ const CreatePage = () => {
       <h3 className="self-center my-10 ">Crreating New Project</h3>
       <form className="w-[90%] max-w-[700px] ">
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject?.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
+          <input value={createdProject.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
           <label htmlFor="name" className="editProject-label">Project Name</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
@@ -96,15 +96,15 @@ const CreatePage = () => {
           <label htmlFor="skills" className="editProject-label">Select Skills</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject?.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
+          <input value={createdProject.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="demoLink" className="editProject-label">Demo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject?.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
+          <input value={createdProject.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="repoLink" className="editProject-label">Repo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject?.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
+          <input value={createdProject.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
           <label htmlFor="imgUrl" className="editProject-label">Image Url</label>
         </div>
         <button disabled={disable} type="submit" onClick={(e) => handleCreate(e)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-slate-400 disabled:text-slate-700 disabled:hover:bg-slate-400 disabled:hover:text-slate-700">Create</button>

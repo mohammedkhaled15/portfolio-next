@@ -20,7 +20,7 @@ const Header = () => {
                 {/* <Link target="_blank" href="#contact" className='scroll__down'>Scroll Down</Link> */}
 
                 <div className="hero-img">
-                    <Image src={"/me.png"} alt="me" fill className="object-contain" />
+                    <Image src={"/me.png"} priority={true} alt="me" fill className="object-contain" />
                 </div>
             </div>
         </header>
