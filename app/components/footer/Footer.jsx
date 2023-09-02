@@ -47,7 +47,7 @@ const Footer = () => {
 
     return (
         <footer>
-            <Link href="/" className="footer__logo">Mohammed khaled</Link>
+            {/* <Link href="/" className="footer__logo">Mohammed khaled</Link> */}
             <ul className='permalinks'>
                 {
                     footerLinks.map(link => (
