@@ -15,49 +15,56 @@ const CreatePage = () => {
   const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.json())
   const { data: skills } = useSWR(`/api/skills`, fetcher)
 
-  const [selectedOptions, setSelectedOptions] = useState<ISkill[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<(ISkill[] | undefined)>([])
   const [selectOptions, setSelectOptions] = useState<ISkill[]>([])
 
   // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
   useEffect(() => {
-    // if (selectOptions.length !== skills?.length) {
-    // skills?.map((skill: ISkill) => {
-
     skills && setSelectOptions(skills)
-    // })
-    // }
-  }, [skills?.length])
+  }, [skills])
 
-  const [createdProject, setCreatedProject] = useState<ProjectData>({ name: "", skill: [], skillsDetails: [], demoLink: "", repoLink: "", imgUrl: "" })
+  const [projectToCreate, setProjectToCreate] = useState<ProjectData>({ name: "", skills: [], skillsDetails: [], demoLink: "", repoLink: "", imgUrl: "" })
+  const [newSkills, setNewSkills] = useState<(ISkill | undefined)[]>([])
 
-  const handleSelectChange = async (option: readonly ISkill[], actionMeta: ActionMeta<ISkill>) => {
-    if (actionMeta.action === "create-option") { // when action is create we will create new skill and update selected options
-      const res = await fetch("/api/skills", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(actionMeta.option)
-      })
-      setSelectedOptions(prev => ([...prev, actionMeta.option]))
-    } else if (actionMeta.action === "remove-value") {
-      // update selected options without updating db
-      setSelectedOptions(prev => prev.filter(skill => skill.value !== actionMeta.removedValue.value));
-    } else {
-      setSelectedOptions(prev => [...prev, ...option]); // update selected options without updating db
+  const handleSelectChange = (options: readonly (ISkill | undefined)[], actionMeta: ActionMeta<ISkill | undefined>) => {
+    if (actionMeta.action === "create-option") {
+      // when action is create we will create new skills array to update the db with it
+      setNewSkills((prev: (ISkill | undefined)[]) => [...prev, actionMeta.option])
     }
+    setSelectedOptions(options as (ISkill[] | undefined))
+    setProjectToCreate({
+      ...projectToCreate,
+      skills: (options as (ISkill[] | undefined))?.map(skill => skill?.value)
+    })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setCreatedProject({ ...createdProject, skills: selectedOptions.map(skill => skill.value), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
+    setProjectToCreate({
+      ...projectToCreate,
+      skills: selectedOptions?.map(skill => skill?.value),
+      [e.currentTarget?.name]: e.currentTarget?.value
+    })
   }
 
-  const handleCreate = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleCreate = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(createdProject)
     setDisable(true)
-    createProject(createdProject)
+    // steps to check if the skill you created you selected it after that or deleted it so we can make sure that it is correct to add it to the database
+    let skillsToAdd: (ISkill | undefined)[] = []
+    newSkills.map(newSkill => {
+      selectedOptions?.map(selectedSkill => {
+        selectedSkill?.value === newSkill?.value ? skillsToAdd.push(selectedSkill) : null
+      })
+    })
+    const res = await fetch("/api/skills", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(skillsToAdd)
+    })
+    console.log(projectToCreate)
+    createProject(projectToCreate)
     router.push("/dashboard")
   }
 
@@ -68,7 +75,7 @@ const CreatePage = () => {
       <h3 className="self-center my-10 ">Crreating New Project</h3>
       <form className="w-[90%] max-w-[700px] ">
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
+          <input value={projectToCreate.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
           <label htmlFor="name" className="editProject-label">Project Name</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
@@ -96,15 +103,15 @@ const CreatePage = () => {
           <label htmlFor="skills" className="editProject-label">Select Skills</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
+          <input value={projectToCreate.demoLink} onChange={handleChange} type="text" name="demoLink" id="demoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="demoLink" className="editProject-label">Demo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
+          <input value={projectToCreate.repoLink} onChange={handleChange} type="text" name="repoLink" id="repoLink" className="editProject-input" placeholder=" " required />
           <label htmlFor="repoLink" className="editProject-label">Repo Link</label>
         </div>
         <div className="relative z-0 w-full mb-6 group">
-          <input value={createdProject.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
+          <input value={projectToCreate.imgUrl} onChange={handleChange} type="text" name="imgUrl" id="imgUrl" className="editProject-input" placeholder=" " required />
           <label htmlFor="imgUrl" className="editProject-label">Image Url</label>
         </div>
         <button disabled={disable} type="submit" onClick={(e) => handleCreate(e)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-slate-400 disabled:text-slate-700 disabled:hover:bg-slate-400 disabled:hover:text-slate-700">Create</button>

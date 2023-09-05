@@ -1,6 +1,6 @@
 type ProjectData = {
   name: string;
-  skill: string[];
+  skills: string[] | undefined;
   skillsDetails?: ISkill[];
   demoLink: string;
   repoLink: string;
