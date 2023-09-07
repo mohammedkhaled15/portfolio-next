@@ -7,7 +7,6 @@ import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import { ActionMeta } from "react-select"
 
-
 const animatedComponents = makeAnimated();
 
 const EditPage = () => {
@@ -19,22 +18,18 @@ const EditPage = () => {
   const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.json())
   const { data: project, error, isLoading } = useSWR(`/api/projects/?id=${projectId}`, fetcher)
   const { data: skills } = useSWR(`/api/skills`, fetcher)
-  console.log(project && project[0].skillsDetails)
 
-  const [selectedOptions, setSelectedOptions] = useState<ISkill[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<(ISkill[] | undefined)>([])
   const [selectOptions, setSelectOptions] = useState<ISkill[]>([])
 
-  useEffect(() => { // Here we populate options of select input with skills came from db on condition when there is difference between their lengths
-    if (selectOptions.length !== skills?.length) {
-      skills?.map((skill: ISkill) => {
-        setSelectOptions((prev: ISkill[]) => [...prev, { value: skill.value, label: skill.label }])
-      })
-    }
-  }, [skills, selectOptions])
+  useEffect(() => {
+    skills && setSelectOptions(skills)
+  }, [skills])
 
-  const [editedProjectData, setEditedProjectData] = useState<ProjectData | undefined>(project)
+  const [editedProjectData, setEditedProjectData] = useState<ProjectData>(project)
 
-  useEffect(() => { // Here we set edited project which used as value for all form inputs with project came from db
+  useEffect(() => {
+    // Here we set edited project which used as value for all form inputs with project came from db
     project && setEditedProjectData(project[0])
   }, [project])
 
@@ -42,35 +37,52 @@ const EditPage = () => {
     if (project && Object.entries(project).length !== 0) {
       project && setSelectedOptions(project[0]?.skillsDetails)
     }
-    console.log(selectedOptions)
   }, [project])
 
-  const handleSelectChange = async (option: readonly ISkill[], actionMeta: ActionMeta<ISkill>) => {
-    if (actionMeta.action === "create-option") { // when action is create we will create new skill and update selected options
-      const res = await fetch("/api/skills", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(actionMeta.option)
-      })
-      setSelectedOptions((prev: ISkill[]) => ([...prev, ...option, actionMeta.option]))
-    } else if (actionMeta.action === "remove-value") {
-      setSelectedOptions(prev => prev.filter(skill => skill.value !== actionMeta.removedValue.value)); // update selected options without updating db
-    } else {
-      setSelectedOptions((prev: ISkill[]) => [...prev, ...option]); // update selected options without updating db
+  const [newSkills, setNewSkills] = useState<(ISkill | undefined)[]>([])
+
+  const handleSelectChange = async (options: readonly (ISkill | undefined)[], actionMeta: ActionMeta<ISkill>) => {
+    if (actionMeta.action === "create-option") {
+      // when action is create we will create new skills array to update the db with it
+      setNewSkills((prev: (ISkill | undefined)[]) => [...prev, actionMeta.option])
     }
-    console.log(actionMeta)
+    setSelectedOptions(options as (ISkill[] | undefined))
+    setEditedProjectData({
+      ...editedProjectData,
+      skills: (options as (ISkill[] | undefined))?.map(skill => skill?.value)
+    })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setEditedProjectData({ ...editedProjectData, skills: selectedOptions.map(skill => skill.value), [e.currentTarget?.name]: e.currentTarget?.value } as ProjectData)
+    setEditedProjectData({
+      ...editedProjectData,
+      skills: selectedOptions?.map(skill => skill.value),
+      [e.currentTarget?.name]: e.currentTarget?.value
+    })
   }
 
-  const handleUpdate = (e: React.FormEvent<HTMLButtonElement>) => {
+  useEffect(() => {
+    console.log("selected options: ", selectedOptions)
+    console.log("edited Project: ", editedProjectData)
+  }, [editedProjectData, selectedOptions])
+
+  const handleUpdate = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     console.log(editedProjectData)
+    // steps to check if the skill you created you selected it after that or deleted it so we can make sure that it is correct to add it to the database
+    let skillsToAdd: (ISkill | undefined)[] = []
+    newSkills.map(newSkill => {
+      selectedOptions?.map(selectedSkill => {
+        selectedSkill?.value === newSkill?.value ? skillsToAdd.push(selectedSkill) : null
+      })
+    })
+    const res = await fetch("/api/skills", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(skillsToAdd)
+    })
     setDisable(true)
     updateProject(projectId, editedProjectData)
     router.push("/dashboard")
@@ -80,7 +92,7 @@ const EditPage = () => {
   if (isLoading) return <h1>Loading ...</h1>
   if (project) return (
     <div className="flex flex-col gap-3 items-center">
-      <h3 className="self-center my-10 ">Editing Project: {project?.name?.toUpperCase().replace("-", " ")}</h3>
+      <h3 className="self-center my-10 ">Editing Project: {project[0]?.name?.toUpperCase().replace("-", " ")}</h3>
       <form className="w-[90%] max-w-[700px] ">
         <div className="relative z-0 w-full mb-6 group">
           <input value={editedProjectData?.name} type="text" name="name" id="name" className="editProject-input" placeholder="" required onChange={handleChange} />
@@ -92,8 +104,8 @@ const EditPage = () => {
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base, state) => ({ ...base, width: "70%", border: "none" }),
-              control: (base, state) => ({ ...base, height: "25px", backgroundColor: "transparent", color: "white" }),
+              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
+              control: (base, state) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
               input: (base, state) => ({ ...base, color: "white" }),
               menu: (base, state) => ({ ...base, borderRadius: "10px" }),
               menuList: (base, state) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),

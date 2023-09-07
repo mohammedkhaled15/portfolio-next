@@ -126,15 +126,15 @@ export const projects = [
     imgUrl:
       "https://raw.githubusercontent.com/mohammedkhaled15/shoes-ecommerce/master/image.png",
   },
-  {
-    id: 15,
-    name: "add-remove-classes",
-    skills: ["html", "js"],
-    demoLink: "https://mohammedkhaled15.github.io/add-remove-classes",
-    repoLink: "https://github.com/mohammedkhaled15/add-remove-classes",
-    imgUrl:
-      "https://raw.githubusercontent.com/mohammedkhaled15/add-remove-classes/master/image.png",
-  },
+  // {
+  //   id: 15,
+  //   name: "add-remove-classes",
+  //   skills: ["html", "js"],
+  //   demoLink: "https://mohammedkhaled15.github.io/add-remove-classes",
+  //   repoLink: "https://github.com/mohammedkhaled15/add-remove-classes",
+  //   imgUrl:
+  //     "https://raw.githubusercontent.com/mohammedkhaled15/add-remove-classes/master/image.png",
+  // },
   {
     id: 16,
     name: "agency-website1",
@@ -166,8 +166,7 @@ export const projects = [
     id: 19,
     name: "Draggable-todo-tasks",
     skills: ["react", "typescript", "reduxtk"],
-    demoLink:
-      "https://draggable-fancy-tasks.netlify.app/",
+    demoLink: "https://draggable-fancy-tasks.netlify.app/",
     repoLink:
       "https://github.com/mohammedkhaled15/draggable-todo-list-react-ts",
     imgUrl:
@@ -203,7 +202,7 @@ export const projects = [
   {
     id: 23,
     name: "Millionaire Quiz",
-    skills: ["react", "tailwind", "nodejs", "mongodb", "expressJs"],
+    skills: ["react", "tailwind", "nodejs", "mongodb", "expressJs", "i18next"],
     demoLink: "https://millionair-quiz.netlify.app/",
     repoLink: "https://github.com/mohammedkhaled15/millionair-quizz-app",
     imgUrl:
@@ -212,7 +211,7 @@ export const projects = [
   {
     id: 24,
     name: "Blog For Posts",
-    skills: [ "nodejs", "mongodb", "expressJs", "EJS", "css", "html"],
+    skills: ["nodejs", "mongodb", "expressJs", "EJS", "css", "html"],
     demoLink: "https://blog-site-fdmp.onrender.com/",
     repoLink: "https://github.com/mohammedkhaled15/blogSite",
     imgUrl:
@@ -221,7 +220,7 @@ export const projects = [
   {
     id: 25,
     name: "Cars Hub",
-    skills: [ "nextjs", "tailwind"],
+    skills: ["nextjs", "tailwind"],
     demoLink: "https://car-rental-tr-next.vercel.app/",
     repoLink: "https://github.com/mohammedkhaled15/car-rental-tr-next",
     imgUrl:

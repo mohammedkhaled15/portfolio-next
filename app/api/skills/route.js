@@ -17,7 +17,6 @@ export async function GET(request) {
 
 export async function POST(request, response) {
   const skillsToAdd = await request.json();
-  console.log(skillsToAdd);
   try {
     connectDB();
     await Skill.insertMany(skillsToAdd);

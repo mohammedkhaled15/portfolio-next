@@ -48,7 +48,6 @@ export async function GET(request) {
 
 export async function POST(request, response) {
   const projectToAdd = await request.json();
-  console.log(projectToAdd);
   try {
     connectDB();
     const newProject = new Project(projectToAdd);

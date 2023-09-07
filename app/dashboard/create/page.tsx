@@ -84,8 +84,8 @@ const CreatePage = () => {
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base) => ({ ...base, width: "70%", border: "none" }),
-              control: (base) => ({ ...base, height: "25px", backgroundColor: "transparent", color: "white" }),
+              container: (base) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
+              control: (base) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
               input: (base) => ({ ...base, color: "white" }),
               menu: (base) => ({ ...base, borderRadius: "10px" }),
               menuList: (base) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
