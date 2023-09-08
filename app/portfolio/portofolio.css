@@ -1,9 +1,12 @@
+#portfolio {
+  min-height: 100vh;
+}
 .portofolio__container {
   margin-top: 3.5rem;
 }
 .portofolio__container .filter-container {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
 }
@@ -20,7 +23,7 @@
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 290px));
-  row-gap: 2rem;
+  row-gap: 1.5rem;
   column-gap: 2rem;
   margin-top: 2rem;
   min-height: 250px;
@@ -59,7 +62,7 @@
   opacity: 1;
   visibility: visible;
 }
-.projects .repo-card img {
+.projects .repo-card .img {
   height: 250px !important;
   object-fit: unset;
   border-radius: 1rem;
