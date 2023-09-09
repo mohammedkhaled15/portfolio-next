@@ -1,15 +1,16 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import {Footer, Nav} from "./components/index"
+import { Footer, Nav } from "./components/index"
 import { Poppins } from 'next/font/google'
- 
+import Provider from "./components/provider/Provider";
+
 const poppins = Poppins({
-  weight: ["300",'400',"500","600"],
+  weight: ["300", '400', "500", "600"],
   subsets: ['latin'],
   display: 'swap',
 })
- 
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        {children}
-        <Nav/>
-        <Footer/>
-        </body>
+        <Provider>
+          {children}
+          <Nav />
+          <Footer />
+        </Provider>
+      </body>
     </html>
   );
 }

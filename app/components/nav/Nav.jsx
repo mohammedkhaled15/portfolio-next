@@ -1,5 +1,4 @@
 "use client"
-
 import "./nav.css"
 import { AiOutlineHome } from "react-icons/ai"
 import { AiOutlineUser } from "react-icons/ai"
@@ -11,6 +10,7 @@ import { usePathname } from "next/navigation"
 import { Tooltip } from 'react-tooltip'
 import { Fragment } from "react"
 import { RiGalleryFill } from "react-icons/ri"
+import { useSession } from "next-auth/react"
 
 export const links = [
     { path: "/", icon: AiOutlineHome },
@@ -21,6 +21,8 @@ export const links = [
     { path: "/contact", icon: AiOutlineContacts },
 ]
 const Nav = () => {
+    const session = useSession()
+    console.log(session)
     const pathname = usePathname()
     return (
         <nav>

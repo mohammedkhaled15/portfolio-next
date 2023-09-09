@@ -6,7 +6,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
-import Spinner from '@app/components/spinner/Spinner'
+import { Spinner } from '@app/components'
 
 const animatedComponents = makeAnimated();
 
