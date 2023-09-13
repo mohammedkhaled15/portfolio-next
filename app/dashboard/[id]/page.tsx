@@ -61,14 +61,8 @@ const EditPage = () => {
     })
   }
 
-  useEffect(() => {
-    console.log("selected options: ", selectedOptions)
-    console.log("edited Project: ", editedProjectData)
-  }, [editedProjectData, selectedOptions])
-
   const handleUpdate = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(editedProjectData)
     // steps to check if the skill you created you selected it after that or deleted it so we can make sure that it is correct to add it to the database
     let skillsToAdd: (ISkill | undefined)[] = []
     newSkills.map(newSkill => {
@@ -100,11 +94,11 @@ const EditPage = () => {
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <CreatableSelect
-            menuPortalTarget={document.body}
+            // menuPortalTarget={document.body}
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
+              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none", zIndex: state.isFocused ? "999" : "1" }),
               control: (base, state) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
               input: (base, state) => ({ ...base, color: "white" }),
               menu: (base, state) => ({ ...base, borderRadius: "10px" }),

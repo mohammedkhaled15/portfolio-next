@@ -63,7 +63,6 @@ const CreatePage = () => {
       },
       body: JSON.stringify(skillsToAdd)
     })
-    console.log(projectToCreate)
     createProject(projectToCreate)
     router.push("/dashboard")
   }
@@ -80,11 +79,11 @@ const CreatePage = () => {
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <CreatableSelect
-            menuPortalTarget={document.body}
+            // menuPortalTarget={document.body}
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
+              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none", zIndex: state.isFocused ? "999" : "1" }),
               control: (base) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
               input: (base) => ({ ...base, color: "white" }),
               menu: (base) => ({ ...base, borderRadius: "10px" }),

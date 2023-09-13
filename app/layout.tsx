@@ -1,18 +1,15 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Footer, Nav } from "./components/index"
-import { Poppins } from 'next/font/google'
+// import { Poppins } from 'next/font/google'
 import Provider from "./components/provider/Provider";
 
-const poppins = Poppins({
-  weight: ["300", '400', "500", "600"],
-  subsets: ['latin'],
-  display: 'swap',
-})
+// const poppins = Poppins({
+//   weight: ["300", '400', "500", "600"],
+//   subsets: ['latin'],
+//   display: 'swap',
+// })
 
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Mohammed Khaled MERN Stack",
@@ -26,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body>
         <Provider>
           {children}
           <Nav />

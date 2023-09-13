@@ -22,7 +22,6 @@ export const links = [
 ]
 const Nav = () => {
     const session = useSession()
-    console.log(session)
     const pathname = usePathname()
     return (
         <nav>

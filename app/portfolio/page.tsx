@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import useSWR from 'swr'
 import makeAnimated from 'react-select/animated';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import { Spinner } from '@app/components'
 
 const animatedComponents = makeAnimated();
@@ -18,12 +18,10 @@ const Portofolio = () => {
   const { data: projects, error: projectsError, isLoading: projectsIsLoading } = useSWR(`/api/projects/`, fetcher)
   const { data: skills, error: skillsError, isLoading: skillsIsLoading } = useSWR(`/api/skills`, fetcher)
 
-  const handleSelectChange = (options: readonly (ISkill)[]) => {
+  const handleSelectChange = (options: MultiValue<ISkill>) => {
     const filters = options?.map(option => option?.value)
     setFilterCriterias(filters)
   }
-
-  console.log(projects)
 
   useEffect(() => {
     if (filterCriterias?.length !== 0) {
@@ -46,8 +44,8 @@ const Portofolio = () => {
             instanceId='filterSkills'
             closeMenuOnSelect={true}
             components={animatedComponents}
-            onChange={handleSelectChange}
-            menuPortalTarget={document.body}
+            onChange={handleSelectChange as (newValue: MultiValue<unknown>) => void}
+            // menuPortalTarget={document.body}
             isMulti
             options={skills}
             placeholder={"Choose between diffrent filters"}
