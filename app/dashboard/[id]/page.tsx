@@ -98,13 +98,14 @@ const EditPage = () => {
             className="editProject-input"
             id="skills"
             styles={{
-              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none", zIndex: state.isFocused ? "999" : "1" }),
+              container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
               control: (base, state) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
               input: (base, state) => ({ ...base, color: "white" }),
               menu: (base, state) => ({ ...base, borderRadius: "10px" }),
               menuList: (base, state) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
               option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? "#4DB5FF" : "", fontSize: "12px" }),
               multiValueLabel: (base, state) => ({ ...base, backgroundColor: "#4DB5FF", color: "white", padding: "3px", width: "fit-content" }),
+              menuPortal: (base) => ({ ...base, zIndex: 999, position: "absolute" })
             }}
             options={selectOptions}
             components={animatedComponents}

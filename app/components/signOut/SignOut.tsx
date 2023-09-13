@@ -1,10 +1,13 @@
 "use client"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const SignOut = () => {
+  const router = useRouter()
 
   const logout = () => {
     signOut()
+    router.push("/")
   }
 
   return (
