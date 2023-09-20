@@ -31,7 +31,7 @@
     "app/contact/page.tsx",
     "app/dashboard/[id]/page.tsx",
     "config/connectDb.js",
-    "app/dashboard/page.jsx"
+    "app/dashboard/page.tsx"
   ],
   "exclude": ["node_modules"]
 }
