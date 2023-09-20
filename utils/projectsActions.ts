@@ -61,13 +61,15 @@ export const updateProject = async (
 };
 
 //Delete Project by its id
-export const deleteProject = async (id: string) => {
-  try {
-    connectDB();
-    await Project.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-    revalidatePath("/dashboard");
-  } catch (error) {
-    console.log(error);
+export const deleteProject = async (id: string | undefined | null) => {
+  if (typeof id === "string") {
+    try {
+      connectDB();
+      await Project.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+      revalidatePath("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

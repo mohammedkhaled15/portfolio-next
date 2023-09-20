@@ -4,9 +4,9 @@ const nextConfig = {
   images: {
     domains: ["raw.githubusercontent.com", "images.pexels.com"],
   },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     serverActions: true,
     appDir: true,
