@@ -124,13 +124,15 @@
 //   )
 // }
 
-import React from 'react'
+import "./services.css"
 
-const page = () => {
+const Services = () => {
   return (
-    <div>page</div>
+    <section id='services'>
+      <h5>What I Offer</h5>
+      <h2>dashboard</h2>
+    </section>
   )
 }
 
-export default page
-
+export default Services
