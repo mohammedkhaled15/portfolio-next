@@ -94,7 +94,7 @@ const EditPage = () => {
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <CreatableSelect
-            // menuPortalTarget={document.body}
+            menuPortalTarget={window.document.body}
             className="editProject-input"
             id="skills"
             styles={{
@@ -105,7 +105,6 @@ const EditPage = () => {
               menuList: (base, state) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
               option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? "#4DB5FF" : "", fontSize: "12px" }),
               multiValueLabel: (base, state) => ({ ...base, backgroundColor: "#4DB5FF", color: "white", padding: "3px", width: "fit-content" }),
-              menuPortal: (base) => ({ ...base, zIndex: 999, position: "absolute" })
             }}
             options={selectOptions}
             components={animatedComponents}
