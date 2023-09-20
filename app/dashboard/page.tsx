@@ -124,7 +124,6 @@
 //   )
 // }
 
-import "./services.css"
 
 const Services = () => {
   return (
