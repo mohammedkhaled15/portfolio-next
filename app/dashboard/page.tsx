@@ -12,16 +12,17 @@ import { AuthOptions } from "next-auth"
 import { ServerContext } from "react"
 import { RiH1 } from "react-icons/ri"
 
-const Dashboard = () => {
+const Dashboard = async () => {
 
-  const { data: session } = useSession()
+  // const session = await getServerSession(authOptions);
+  return (JSON.stringify(authOptions))
 
-  if (session) {
-    return <h1>Hello</h1>
-    // return (JSON.stringify(session, null, 2))
-  } else {
-    return <h1>Denied</h1>
-  }
+  // if (session) {
+  //   return <h1>Hello</h1>
+  //   // return (JSON.stringify(session, null, 2))
+  // } else {
+  //   return <h1>Denied</h1>
+  // }
 
 
   // async function handleClose() {
@@ -125,18 +126,6 @@ const Dashboard = () => {
   //   //   </div>
   //   // </>
   // )
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
-    },
-  }
 }
 
 export default Dashboard
