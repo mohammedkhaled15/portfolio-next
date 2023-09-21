@@ -11,6 +11,7 @@ import SignOut from "@app/components/signOut/SignOut"
 import { AuthOptions } from "next-auth"
 
 const Dashboard = async () => {
+  redirect("/login")
 
   // const session = await getServerSession(authOptions as AuthOptions)
 
