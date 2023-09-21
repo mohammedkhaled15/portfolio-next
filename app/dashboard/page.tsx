@@ -11,16 +11,13 @@ import SignOut from "@app/components/signOut/SignOut"
 import { AuthOptions } from "next-auth"
 
 const Dashboard = async () => {
-  redirect("/login")
 
-  // const session = await getServerSession(authOptions as AuthOptions)
+  const session = await getServerSession(authOptions as AuthOptions)
 
-  // if (session) {
-  //   console.log(session)
-  //   // return (JSON.stringify(session, null, 2))
-  // } else {
-  //   redirect("/login")
-  // }
+  if (session) {
+    console.log(session)
+    // return (JSON.stringify(session, null, 2))
+  }
 
 
   // async function handleClose() {
