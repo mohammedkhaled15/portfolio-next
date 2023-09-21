@@ -12,14 +12,14 @@ import { AuthOptions } from "next-auth"
 
 const Dashboard = async () => {
 
-  const session = await getServerSession(authOptions as AuthOptions)
+  // const session = await getServerSession(authOptions as AuthOptions)
 
-  if (session) {
-    console.log(session)
-    // return (JSON.stringify(session, null, 2))
-  } else {
-    redirect("/login")
-  }
+  // if (session) {
+  //   console.log(session)
+  //   // return (JSON.stringify(session, null, 2))
+  // } else {
+  //   redirect("/login")
+  // }
 
 
   async function handleClose() {
