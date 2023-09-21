@@ -10,7 +10,7 @@ import { redirect } from "next/navigation"
 import SignOut from "@app/components/signOut/SignOut"
 import { AuthOptions } from "next-auth"
 
-export default async function Dashboard() {
+const Dashboard = async () => {
 
   const session = await getServerSession(authOptions as AuthOptions)
 
@@ -124,3 +124,5 @@ export default async function Dashboard() {
     </>
   )
 }
+
+export default Dashboard
