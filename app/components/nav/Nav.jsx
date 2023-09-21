@@ -31,7 +31,7 @@ const Nav = () => {
                         <Tooltip key={link.path} id={`${link.path}`} />
                         <Link
                             data-tooltip-id={`${link.path}`}
-                            data-tooltip-content={link.path === "/" ? "Home" : link.path.substring(1)}
+                            data-tooltip-content={link.path === "/" ? "Home" : link.path.substring(1).toUpperCase()}
                             href={link.path}
                             className={pathname === `${link.path}` || "" ? "active" : ""}
                         >
