@@ -14,8 +14,8 @@ import { RiH1 } from "react-icons/ri"
 
 const Dashboard = async () => {
 
-  // const session = await getServerSession(authOptions);
-  return (JSON.stringify(authOptions))
+  const session = await getServerSession(authOptions)
+  return (JSON.stringify(session))
 
   // if (session) {
   //   return <h1>Hello</h1>
