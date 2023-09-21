@@ -8,13 +8,13 @@ import { getServerSession } from "next-auth/next"
 import authOptions from "../api/auth/[...nextauth]/authOption"
 import { redirect } from "next/navigation"
 import SignOut from "@app/components/signOut/SignOut"
-import { AuthOptions } from "next-auth"
+import { AuthOptions, SessionStrategy } from "next-auth"
 import { ServerContext } from "react"
 import { RiH1 } from "react-icons/ri"
 
 const Dashboard = async () => {
 
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   return (JSON.stringify(session))
 
   // if (session) {

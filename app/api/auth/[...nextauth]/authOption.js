@@ -1,6 +1,7 @@
 import connectDb from "@config/connectDb";
 import User from "../../../../models/user";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { SessionStrategy } from "next-auth";
 
 const authOptions = {
   providers: [
@@ -36,6 +37,7 @@ const authOptions = {
   ],
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default authOptions;
