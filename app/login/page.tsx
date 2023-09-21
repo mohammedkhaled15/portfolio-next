@@ -22,7 +22,7 @@ const Login = () => {
     if (res?.ok) router.push("/dashboard")
   }
 
-  if (status === "loading") return <Spinner />
+  if (status === "loading") return <section className="min-h-screen flex justify-center items-center"><Spinner /></section>
   if (status === "unauthenticated") return (
     <section className="min-h-screen">
       <h5>Login</h5>

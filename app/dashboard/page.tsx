@@ -22,22 +22,22 @@ const Dashboard = async () => {
   // }
 
 
-  async function handleClose() {
-    "use server"
-    console.log("modal closed")
-  }
-  async function handleOk(e: string | null | undefined) {
-    "use server"
-    await deleteProject(e)
-  }
+  // async function handleClose() {
+  //   "use server"
+  //   console.log("modal closed")
+  // }
+  // async function handleOk(e: string | null | undefined) {
+  //   "use server"
+  //   await deleteProject(e)
+  // }
 
-  async function logout() {
-    "use server"
-    await signOut()
-    redirect("/")
-  }
+  // async function logout() {
+  //   "use server"
+  //   await signOut()
+  //   redirect("/")
+  // }
 
-  const projects = await getAllProjects()
+  // const projects = await getAllProjects()
 
   return (
     // <>
