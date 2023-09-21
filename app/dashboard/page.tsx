@@ -4,13 +4,10 @@ import { Modal } from "@app/components"
 import "./dashboard.css"
 import { deleteProject, getAllProjects } from "@utils/projectsActions"
 import { getSession, signOut, useSession } from "next-auth/react"
-import { getServerSession } from "next-auth/next"
 import authOptions from "../api/auth/[...nextauth]/authOption"
 import { redirect } from "next/navigation"
 import SignOut from "@app/components/signOut/SignOut"
-import { AuthOptions, SessionStrategy } from "next-auth"
-import { ServerContext } from "react"
-import { RiH1 } from "react-icons/ri"
+import { getServerSession } from "next-auth"
 
 const Dashboard = async () => {
 
