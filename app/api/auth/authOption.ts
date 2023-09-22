@@ -12,10 +12,11 @@ const authOptions: NextAuthOptions = {
         await connectDb();
         try {
           const foundedUser = await User.findOne({
-            username: credentials.username,
+            username: credentials?.username,
           });
           if (foundedUser) {
-            const isPassCorrect = foundedUser.password === credentials.password;
+            const isPassCorrect =
+              foundedUser.password === credentials?.password;
             if (isPassCorrect) {
               const { password, username } = foundedUser;
               const user = {
@@ -33,6 +34,7 @@ const authOptions: NextAuthOptions = {
           throw new Error(error);
         }
       },
+      credentials: undefined,
     }),
   ],
   session: { strategy: "jwt", maxAge: 10 },
