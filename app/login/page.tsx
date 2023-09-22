@@ -1,6 +1,6 @@
 "use client"
 import { SignInResponse, signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { Spinner } from "@app/components"
 
@@ -22,6 +22,7 @@ const Login = () => {
     if (res?.ok) router.push("/dashboard")
   }
 
+  if (status === "authenticated") { router.push("/dashboard") }
   if (status === "loading") return <section className="min-h-screen flex justify-center items-center"><Spinner /></section>
   if (status === "unauthenticated") return (
     <section className="min-h-screen">
