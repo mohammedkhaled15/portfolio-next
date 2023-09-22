@@ -4,14 +4,14 @@ import { Modal } from "@app/components"
 import "./dashboard.css"
 import { deleteProject, getAllProjects } from "@utils/projectsActions"
 import { getSession, signOut, useSession } from "next-auth/react"
-import authOptions from "../api/auth/[...nextauth]/authOption"
+import authOptions from "../api/auth/authOption"
 import { redirect } from "next/navigation"
 import SignOut from "@app/components/signOut/SignOut"
 import { getServerSession } from "next-auth"
 
 const Dashboard = async () => {
 
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   return (<h1>{JSON.stringify(session)}</h1>)
 
   // if (session) {

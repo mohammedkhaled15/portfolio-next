@@ -1,8 +1,9 @@
 import connectDb from "@config/connectDb";
-import User from "../../../../models/user";
+import User from "../../../models/user";
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { NextAuthOptions } from "next-auth";
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -34,7 +35,7 @@ const authOptions = {
       },
     }),
   ],
-  session: { strategy: "jwt", maxAge: 60 * 15 },
+  session: { strategy: "jwt", maxAge: 10 },
   // pages: { signIn: "/login" },
   secret: process.env.NEXTAUTH_SECRET,
 };
