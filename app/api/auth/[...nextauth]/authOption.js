@@ -35,7 +35,7 @@ const authOptions = {
     }),
   ],
   session: { strategy: "jwt", maxAge: 60 * 15 },
-  pages: { signIn: "/login" },
+  // pages: { signIn: "/login" },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
