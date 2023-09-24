@@ -61,10 +61,39 @@ const Portofolio = () => {
           />
           <AnimatePresence>
             <motion.div layout className="projects">
-              {projectsIsLoading ? <Spinner /> : null}
-              {projectsError ? <h1>Failed to Load</h1> : null}
               {
-                filteredProjects?.length > 0 && projects?.length > 0 ?
+                projectsIsLoading ? <Spinner />
+                  : projectsError ? <h1>Failed to Load</h1>
+                    : !projects ? <h1 style={{ gridArea: "none" }}>No Projects fetched from DB</h1>
+                      : projects?.length > 0 && !(filteredProjects?.length > 0) ? <h1 style={{ gridArea: "none" }}>No Projects Matches These Filters</h1>
+                        : (filteredProjects?.map((project: ProjectData) => {
+                          return (
+                            <motion.div
+                              layout animate={{ opacity: 1 }}
+                              initial={{ opacity: 0 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.8 }}
+                              className="repo-card" key={project.name}
+                            >
+                              <div className='img'>
+                                <Image src={project.imgUrl} fill style={{ objectFit: "cover", borderRadius: "1rem" }} alt="project main img" />
+                                <div className="overlay">
+                                  <div className="overlay__cta">
+                                    <a href={project.demoLink} className="btn btn-primary" target="_blan;">Live Demo</a>
+                                    <a href={project.repoLink} className="btn" target="_blan;">Repo</a>
+                                  </div>
+                                  <h4 >{project.name}</h4>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )
+                        }))
+              }
+              {/* {projectsIsLoading ? <Spinner /> : null}
+              {projectsError ? <h1>Failed to Load</h1> : null}
+              {!projects ? <h1 style={{ gridArea: "none" }}>No Projects Matches These Filters</h1> : null}
+              {
+                filteredProjects?.length > 0 ?
                   (filteredProjects?.map((project: ProjectData) => {
                     return (
                       <motion.div
@@ -86,8 +115,8 @@ const Portofolio = () => {
                         </div>
                       </motion.div>
                     )
-                  })) : <h1 style={{ gridArea: "none" }}>No Projects Matches These Filters</h1>
-              }
+                  })) : null
+              } */}
             </motion.div>
           </AnimatePresence>
         </div>
