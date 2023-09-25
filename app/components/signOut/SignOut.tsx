@@ -1,13 +1,14 @@
 "use client"
 import { signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { FormEvent } from "react"
 
 const SignOut = () => {
   const router = useRouter()
 
-  const logout = () => {
-    signOut()
-    router.push("/")
+  const logout = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: "/" })
+    router.push(data.url)
   }
 
   return (

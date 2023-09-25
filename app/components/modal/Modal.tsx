@@ -2,12 +2,13 @@
 
 import React, { useRef, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import useSWR from "swr"
 
 interface ModalProps {
   title: string,
   onClose: () => void,
   onOk: (id?: string | null) => void,
-  children: React.ReactNode
+  children: React.ReactNode,
 }
 
 const Modal = ({ title, onClose, onOk, children }: ModalProps) => {
@@ -15,6 +16,7 @@ const Modal = ({ title, onClose, onOk, children }: ModalProps) => {
   const searchParams = useSearchParams()
   const showModal = searchParams.get("showModal")
   const id: string | null = searchParams.get("id")
+  const projectName: string | null = searchParams.get("projectName")
   const modalRef = useRef<null | HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -53,8 +55,10 @@ const Modal = ({ title, onClose, onOk, children }: ModalProps) => {
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure you want to <span className="text-red-600 font-semibold underline uppercase">delete</span> this project?
+                Are you sure you want to <span className="text-red-600 font-semibold underline uppercase">delete</span> this project?<br />
+                Project Name: {projectName}
               </h3>
+
               <button onClick={clickOk} type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                 Yes, I&apos;m sure
               </button>

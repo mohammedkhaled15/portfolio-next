@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Modal } from "@app/components"
 import "./dashboard.css"
 import { deleteProject, getAllProjects } from "@utils/projectsActions"
-import { getSession, signOut, useSession } from "next-auth/react"
 import authOptions from "../api/auth/authOption"
 import { redirect } from "next/navigation"
 import SignOut from "@app/components/signOut/SignOut"
@@ -12,12 +11,10 @@ import { getServerSession } from "next-auth"
 const Dashboard = async () => {
 
   const session = await getServerSession(authOptions)
-  // return (<h1>{JSON.stringify(session)}</h1>)
 
   if (!session?.user?.name) {
     redirect("/login")
   }
-
 
   async function handleClose() {
     "use server"
@@ -26,12 +23,6 @@ const Dashboard = async () => {
   async function handleOk(e: string | null | undefined) {
     "use server"
     await deleteProject(e)
-  }
-
-  async function logout() {
-    "use server"
-    await signOut()
-    redirect("/")
   }
 
   const projects = await getAllProjects()
@@ -53,7 +44,6 @@ const Dashboard = async () => {
           </Link>
           <SignOut />
         </div>
-
 
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -107,7 +97,7 @@ const Dashboard = async () => {
                   </td>
                   <td className="px-6 py-4 text-right flex gap-2">
                     <Link href={`/dashboard/${project._id}`} className=" btn btn-primary font-medium bg-blue-600 dark:bg-blue-500">Edit</Link>
-                    <Link href={`/dashboard?showModal=y&id=${project._id}`} className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
+                    <Link href={`/dashboard?showModal=y&id=${project._id}&projectName=${project.name}`} className="btn btn-primary font-medium bg-red-600 dark:bg-red-500">Delete</Link>
                   </td>
                 </tr>
               )) :

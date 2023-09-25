@@ -18,7 +18,7 @@ const Login = () => {
     const username = target.username.value
     const password = target.password.value
 
-    const res: SignInResponse | undefined = await signIn("credentials", { redirect: false, username, password })
+    const res: SignInResponse | undefined = await signIn("credentials", { redirect: true, username, password })
     if (res?.ok) router.push("/dashboard")
   }
 
