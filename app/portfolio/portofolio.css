@@ -72,25 +72,25 @@
   font-size: 1.2rem;
 }
 /*========= MEDIA QUERIES (MEDIUM) =========*/
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   .projects .repo-card .overlay {
     position: unset;
     visibility: visible;
     opacity: 1;
-    height: fit-content;
+    height: fit-content; */
     /* padding: 1rem; */
-    flex-wrap: wrap-reverse;
+/*     flex-wrap: wrap-reverse;
     background-color: transparent;
   }
   .projects .repo-card {
-    background-color: var(--color-bg-variant);
+    background-color: var(--color-bg-variant); */
     /* padding: 1rem; */
-    border-radius: 2rem;
+/*     border-radius: 2rem;
     border: 1px solid transparent;
     transition: var(--transition);
     width: 100%;
   }
-}
+} */
 /*========= MEDIA QUERIES (SMALL) =========*/
-@media screen and (max-width: 600px) {
-}
+/* @media screen and (max-width: 600px) {
+} */
