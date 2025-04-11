@@ -78,45 +78,26 @@ const Portofolio = () => {
                               <div className='img'>
                                 <Image src={project.imgUrl} fill style={{ objectFit: "cover", borderRadius: "1rem" }} alt="project main img" />
                                 <div className="overlay">
+                                  <h4 className='text-xl font-bold' >{project.name}</h4>
+                                  {
+                                    (project?.skills ?? []).length > 0 && (
+                                      <div>
+                                        {project?.skills?.map((skill: string, i: number) => (
+                                          <span className='font-bold text-lg text-sky-500 uppercase' key={i}>{skill}{i < (project?.skills ?? []).length - 1 && " - "}</span>
+                                        ))}
+                                      </div>
+                                    ) 
+                                  }
                                   <div className="overlay__cta">
                                     <a href={project.demoLink} className="btn btn-primary" target="_blan;">Live Demo</a>
                                     <a href={project.repoLink} className="btn" target="_blan;">Repo</a>
                                   </div>
-                                  <h4 >{project.name}</h4>
                                 </div>
                               </div>
                             </motion.div>
                           )
                         }))
               }
-              {/* {projectsIsLoading ? <Spinner /> : null}
-              {projectsError ? <h1>Failed to Load</h1> : null}
-              {!projects ? <h1 style={{ gridArea: "none" }}>No Projects Matches These Filters</h1> : null}
-              {
-                filteredProjects?.length > 0 ?
-                  (filteredProjects?.map((project: ProjectData) => {
-                    return (
-                      <motion.div
-                        layout animate={{ opacity: 1 }}
-                        initial={{ opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="repo-card" key={project.name}
-                      >
-                        <div className='img'>
-                          <Image src={project.imgUrl} fill style={{ objectFit: "cover", borderRadius: "1rem" }} alt="project main img" />
-                          <div className="overlay">
-                            <div className="overlay__cta">
-                              <a href={project.demoLink} className="btn btn-primary" target="_blan;">Live Demo</a>
-                              <a href={project.repoLink} className="btn" target="_blan;">Repo</a>
-                            </div>
-                            <h4 >{project.name}</h4>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )
-                  })) : null
-              } */}
             </motion.div>
           </AnimatePresence>
         </div>
